@@ -7,6 +7,10 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'admindashboard.top_purchaser' %}">Top Purchaser</a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'admindashboard.movie_status' %}">Movie Statistics</a>
+            </li>
         </ul>
         {% block dashboard_content %}
         {% endblock dashboard_content %}

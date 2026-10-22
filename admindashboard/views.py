@@ -1,7 +1,39 @@
 from django.shortcuts import render
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.contrib.auth.models import User
 from cart.models import Item
+from django.contrib.admin.views.decorators import staff_member_required
+from movies.models import Movie
+
+@staff_member_required
+def movie_status(request):
+    most_bought = (
+        Movie.objects
+        .annotate(times_bought=Sum('item__quantity'))
+        .filter(times_bought__gt=0)
+        .order_by('-times_bought', 'name')
+        .first()
+    )
+
+    most_reviewed = (
+        Movie.objects
+        .annotate(times_reviewed=Count('review'))
+        .filter(times_reviewed__gt=0)
+        .order_by('-times_reviewed', 'name')
+        .first()
+    )
+
+    template_data = {
+        'title': 'Admin Dashboard - Movie Statistics',
+        'most_bought': most_bought,
+        'most_reviewed': most_reviewed,
+    }
+    return render(
+        request,
+        'admindashboard/movie_status.html',
+        {'template_data': template_data},
+    )
+
 
 
 def top_purchaser(request):

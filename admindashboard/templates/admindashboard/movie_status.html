@@ -1,0 +1,31 @@
+{% extends 'admindashboard/base.html' %}
+
+{% block dashboard_content %}
+<h3>Movie Statistics</h3>
+
+<h4> Most Bought Movie</h4>
+{%if template_data.most_bought%}
+    <p> 
+        {{ template_data.most_bought.name }}
+    </p>
+    <p>
+        Times Bought: {{ template_data.most_bought.times_bought }}
+    </p>
+{%else%}
+    <p> No Movie Have Been Purchased Yet.</p>
+{%endif%}
+
+<h4> Most Reviewed Movie</h4>
+{%if template_data.most_reviewed%}
+    <p> 
+        {{ template_data.most_reviewed.name }}
+    </p>
+    <p>
+        Times Reviewed: {{ template_data.most_reviewed.times_reviewed }}
+    </p>
+{%else%}
+    <p> No Movie Have Been Reviewed Yet.</p>
+{%endif%}
+
+{% endblock dashboard_content %}
+
